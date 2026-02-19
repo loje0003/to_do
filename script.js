@@ -3,11 +3,8 @@
 const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
 const button = document.getElementById("add-btn");
-
-// Hent fra localStorage, eller start med tom array
 const todoArr = JSON.parse(localStorage.getItem("stupid_array")) || [];
 
-// Vis eksisterende opgaver ved start
 showTaskArr();
 
 button.addEventListener("click", addTask);
@@ -31,19 +28,19 @@ function addTask() {
 }
 
 function addNameToModel(todoObj) {
-  todoArr.push(todoObj); //Vi tilføjer opgaven til todoArr
-  localStorage.setItem("stupid_array", JSON.stringify(todoArr)); // arrayet bliver gemt i localStorage, men først konverteret til en streng med JSON.stringify().
+  todoArr.push(todoObj);
+  localStorage.setItem("stupid_array", JSON.stringify(todoArr));
 }
 
 function showTaskArr() {
   listContainer.innerHTML = "";
-  // Sorter først: ikke-færdige opgaver først, færdige opgaver til sidst
   const sortedArr = [...todoArr].sort((a, b) => a.done - b.done);
 
   sortedArr.forEach((elm) => {
     listContainer.innerHTML += `
       <li data-id="${elm.id}" class="${elm.done ? "checked" : ""}">
         ${elm.text}
+
           <label>
           Antal:
           <input 
@@ -58,12 +55,6 @@ function showTaskArr() {
   });
 }
 
-//bruger forEach() til at gå igennem alle opgaverne i arrayet
-// For hver opgave opretter vi et <li> med:
-// data-id → opgavens unikke id
-// class="checked" hvis opgaven er færdig
-// span med × → slet-knap
-
 listContainer.addEventListener("click", function (e) {
   if (e.target.tagName === "LI") {
     const id = e.target.getAttribute("data-id");
@@ -73,12 +64,6 @@ listContainer.addEventListener("click", function (e) {
 
     updateStorage();
     showTaskArr();
-
-    // Vi bruger event delegation: vi lytter på hele <ul> (listContainer) i stedet for hvert <li>.
-    // Hvis vi klikker på LI:
-    // Find opgaven i arrayet via data-id
-    // Skift done fra true → false eller omvendt
-    // Opdater localStorage og vis listen igen
   } else if (e.target.tagName === "SPAN") {
     const li = e.target.parentElement;
     const id = li.getAttribute("data-id");
@@ -98,10 +83,6 @@ listContainer.addEventListener("click", function (e) {
     updateStorage();
   }
 });
-// Hvis vi klikker på SPAN (×):
-// Find opgavens index i arrayet
-// Brug splice() til at slette opgaven
-// Opdater localStorage og vis listen igen
 
 function updateStorage() {
   localStorage.setItem("stupid_array", JSON.stringify(todoArr));
