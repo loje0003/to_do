@@ -32,7 +32,7 @@ h1 {
   border-radius: 30px;
   padding-left: 20px;
   margin-bottom: 25px;
-  background: green;
+  background: #c4372d;
 }
 input {
   flex: 1;
@@ -44,7 +44,7 @@ button {
   border: none;
   outline: none;
   padding: 16px 50px;
-  background: blue;
+  background: #491f23;
   color: #fff;
   cursor: pointer;
   border-radius: 40px;
